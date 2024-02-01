@@ -1,0 +1,14 @@
+.ohlc {
+    position: absolute;
+    top: 0;
+    left: 0;
+    text-align: left;
+}
+
+.ohlc.ohlc-green span {
+    color: green;
+}
+
+.ohlc.ohlc-red span {
+    color: red;
+}
