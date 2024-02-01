@@ -4,7 +4,7 @@ import { createChart, ColorType } from 'lightweight-charts';
 import '../styles/AssetChart.css';
 
 const AssetChart = () => {
-  const [ chartData, setChartData ] = useState({'candlestick_data': [], smas: []});
+  const [ chartData, setChartData ] = useState([]);
   const [ candleData, setCandleData ] = useState(null);
   const { assetName } = useParams();
   const chartContainerRef = useRef();
@@ -25,7 +25,6 @@ const AssetChart = () => {
             throw new Error('There was an error in trade signals request');
         }
         const data = await response.json();
-        console.log('fetch');
         setChartData(data);
       } catch (error) {
         console.error(`Error fetching ${assetName} trade signals:`, error);
@@ -52,27 +51,43 @@ const AssetChart = () => {
       });
       chart.timeScale().fitContent();
 
-      // SMAs
       const myColors = ['green', 'red', 'blue', 'orange', 'cyan', 'magenta', 'yellow'];
-      if (chartData['smas'] && Array.isArray(chartData['smas'])) {
-        chartData['smas'].forEach((sma_length, index) => {          
-          const smaSeries = chart.addLineSeries({ lineWidth: 1, color: myColors[index % myColors.length] });
-          const smaData = chartData['candlestick_data']
-            .map(point => ({time: point.time, value: point.sma[sma_length]}))
-            .filter(point => point.value);
-          smaSeries.setData(smaData);
-        });
-      }
+
+      // SMA
+      const smaSeries = chart.addLineSeries({ lineWidth: 1, color: myColors[0] });
+      const smaData = chartData
+        .reduce( (res, point) => {
+          if (point.time && point.sma) {
+            res.push({time: point.time, value: point.sma});
+          }
+          return res;
+        }, []);
+      smaSeries.setData(smaData);
+
+      // EMA
+      const emaSeries = chart.addLineSeries({ lineWidth: 1, color: myColors[1] });
+      const emaData = chartData
+        .reduce( (res, point) => {
+          if (point.time && point.ema) {
+            res.push({time: point.time, value: point.ema});
+          }
+          return res;
+        }, []);
+      emaSeries.setData(emaData);
 
       // Candlestick Chart
       const candlestickSeries = chart.addCandlestickSeries({ lineColor: colors.lineColor, topColor: colors.areaTopColor, bottomColor: colors.areaBottomColor });
-      candlestickSeries.setData(chartData['candlestick_data']);
+      candlestickSeries.setData(chartData);
 
       // RSI
       const rsiSeries = chart.addLineSeries({ color: 'purple', lineWidth: 1, pane: 1 });
-      const rsiData = chartData['candlestick_data']
-        .map(point => ({time: point.time, value: point.rsi}))
-        .filter(point => point.value);
+      const rsiData = chartData
+        .reduce( (res, point) => {
+          if (point.time && point.rsi) {
+            res.push({time: point.time, value: point.rsi});
+          }
+          return res;
+        }, []);
       rsiSeries.setData(rsiData);
       rsiSeries.createPriceLine({
         price: 70,
@@ -88,28 +103,40 @@ const AssetChart = () => {
 
       // MACD
       const macdFastSeries = chart.addLineSeries({ color: 'orange', lineWidth: 1, pane: 2 });
-      const macdFastData = chartData['candlestick_data']
-        .map(point => ({time: point.time, value: point.macd}))
-        .filter(point => point.value);
+      const macdFastData = chartData
+        .reduce( (res, point) => {
+          if (point.time && point['macd-macd']) {
+            res.push({time: point.time, value: point['macd-macd']});
+          }
+          return res;
+        }, []);
       macdFastSeries.setData(macdFastData);
       const macdSlowSeries = chart.addLineSeries({ color: 'blue', lineWidth: 1, pane: 2 });
-      const macdSlow = chartData['candlestick_data']
-        .map(point => ({time: point.time, value: point.signal}))
-        .filter(point => point.value);
+      const macdSlow = chartData
+        .reduce( (res, point) => {
+          if (point.time && point['macd-signal']) {
+            res.push({time: point.time, value: point['macd-signal']});
+          }
+          return res;
+        }, []);
       macdSlowSeries.setData(macdSlow);
       const macdHistogramSeries = chart.addHistogramSeries({ color: 'purple', lineWidth: 1, pane: 2 });
-      const macdHistogram = chartData['candlestick_data']
-        .map(point => ({
-          time: point.time, 
-          value: point.histogram,
-          color: point.histogram > 0? 'green' :'red'
-        }))
-        .filter(point => point.value);
+      const macdHistogram = chartData
+        .reduce( (res, point) => {
+          if (point.time && point['macd-hist']) {
+            res.push({
+              time: point.time, 
+              value: point['macd-hist'],
+              color: point['macd-hist'] > 0? 'green' :'red'
+            });
+          }
+          return res;
+        }, []);
       macdHistogramSeries.setData(macdHistogram);
 
       // Markers
       candlestickSeries.setMarkers(
-        chartData['candlestick_data'].filter(d => d.long || d.short).map(d => (
+        chartData.filter(d => d.long || d.short).map(d => (
           d.long ? {
             time: d.time,
             position: 'belowBar',
