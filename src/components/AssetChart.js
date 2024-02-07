@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { useParams } from 'react-router-dom';
 import { createChart, ColorType } from 'lightweight-charts';
 import '../styles/AssetChart.css';
+import { requestChartData } from '../services/serverRequests';
 
 const AssetChart = () => {
   const [ chartData, setChartData ] = useState([]);
@@ -18,21 +19,11 @@ const AssetChart = () => {
   let timeframe = '1D';
 
   useEffect(() => {
-    const fetchPriceHistory = async () => {
-      try {
-        const response = await fetch(`http://127.0.0.1:5000/assets/${assetName}/${timeframe}`);
-        if (!response.ok) {
-            throw new Error('There was an error in trade signals request');
-        }
-        const data = await response.json();
-        setChartData(data);
-      } catch (error) {
-        console.error(`Error fetching ${assetName} trade signals:`, error);
-      }
-    };
-
-    fetchPriceHistory()      
-  }, [assetName]);
+    (async () => {
+      const data = await requestChartData(assetName, timeframe);
+      setChartData(data);
+    })();    
+  }, [assetName, timeframe]);
 
   useEffect(
     () => {
