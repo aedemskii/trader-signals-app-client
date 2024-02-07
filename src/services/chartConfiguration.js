@@ -1,40 +1,5 @@
 import { createChart, ColorType } from 'lightweight-charts';
-
-const COLOR = {
-  BLACK: "black",
-  BLUE: "blue",
-  CYAN: "cyan",
-  GRAY: "gray",
-  GREEN: "green",
-  MAGENTA: "magenta",
-  ORANGE: "orange",
-  PURPLE: "purple",
-  RED: "red",
-  WHITE: "white",
-  YELLOW: "yellow",
-};
-
-const defLineConfig = {
-  lineWidth: 1,
-  priceLineVisible: false,
-  lastValueVisible: false,
-  crosshairMarkerVisible: false,
-}
-
-const KEY = {
-  TIME: 'time',
-  SMA: 'sma',
-  EMA: 'ema',
-  MACD_F: 'macd-macd',
-  MACD_S: 'macd-signal',
-  MACD_H: 'macd-hist',
-  RSI: 'rsi',
-  BBANDS_SMA: 'bbands_sma',
-  BBANDS_HIGH: 'bbands-higher',
-  BBANDS_LOW: 'bbands-lower',
-  STOCHRSI_S: 'stochrsi-slow',
-  STOCHRSI_F: 'stochrsi-fast',
-}
+import { COLOR, SERVER_DATA_KEYS as KEY, DEFAULT_LINE_SERIES_CONFIG as DLSC } from './consts';
 
 export const createMyChart = (container, chartData) => {
   const chart = createChart(container, {
@@ -151,26 +116,26 @@ const parseChartData = (data) => {
 };
 
 const addBBands = (chart, data) => {
-    const bbandsUp = chart.addLineSeries({ ...defLineConfig, color: COLOR.CYAN });
+    const bbandsUp = chart.addLineSeries({ ...DLSC, color: COLOR.CYAN });
     bbandsUp.setData(data.up);
-    const bbandsMid = chart.addLineSeries({ ...defLineConfig, color: COLOR.GRAY});
+    const bbandsMid = chart.addLineSeries({ ...DLSC, color: COLOR.GRAY});
     bbandsMid.setData(data.mid);
-    const bbandsLow = chart.addLineSeries({ ...defLineConfig, color: COLOR.CYAN});
+    const bbandsLow = chart.addLineSeries({ ...DLSC, color: COLOR.CYAN});
     bbandsLow.setData(data.low);
 }
 
 const addSMA = (chart, data) => {
-  const smaSeries = chart.addLineSeries({ ...defLineConfig, color: COLOR.BLUE});
+  const smaSeries = chart.addLineSeries({ ...DLSC, color: COLOR.BLUE});
   smaSeries.setData(data);
 }
 
 const addEMA = (chart, data) => {
-  const emaSeries = chart.addLineSeries({ ...defLineConfig, color: COLOR.MAGENTA});
+  const emaSeries = chart.addLineSeries({ ...DLSC, color: COLOR.MAGENTA});
   emaSeries.setData(data);
 }
 
 const addRSI = (chart, data) => {
-  const rsiSeries = chart.addLineSeries({ ...defLineConfig, color: COLOR.PURPLE, pane: 1 });
+  const rsiSeries = chart.addLineSeries({ ...DLSC, color: COLOR.PURPLE, pane: 1 });
   rsiSeries.setData(data);
   rsiSeries.createPriceLine({
     price: 70,
@@ -185,17 +150,27 @@ const addRSI = (chart, data) => {
 }
 
 const addMACD = (chart, data) => {
-  const macdFastSeries = chart.addLineSeries({ ...defLineConfig, color: COLOR.ORANGE, pane: 2 });
+  const macdFastSeries = chart.addLineSeries({ ...DLSC, color: COLOR.ORANGE, pane: 2 });
   macdFastSeries.setData(data.fast);
-  const macdSlowSeries = chart.addLineSeries({ ...defLineConfig, color: COLOR.BLUE, pane: 2 });
+  const macdSlowSeries = chart.addLineSeries({ ...DLSC, color: COLOR.BLUE, pane: 2 });
   macdSlowSeries.setData(data.slow);
-  const macdHistogramSeries = chart.addHistogramSeries({ ...defLineConfig, pane: 2 });
+  const macdHistogramSeries = chart.addHistogramSeries({ ...DLSC, pane: 2 });
   macdHistogramSeries.setData(data.hist);
 }
 
 const addStochRSI = (chart, data) => {
-  const stochRsiSlowSeries = chart.addLineSeries({...defLineConfig, color: COLOR.RED, pane: 3 });
+  const stochRsiSlowSeries = chart.addLineSeries({...DLSC, color: COLOR.RED, pane: 3 });
   stochRsiSlowSeries.setData(data.slow);
-  const stochRsiFastSeries = chart.addLineSeries({...defLineConfig, color: COLOR.GREEN, pane: 3 });
+  const stochRsiFastSeries = chart.addLineSeries({...DLSC, color: COLOR.GREEN, pane: 3 });
   stochRsiFastSeries.setData(data.fast);
+  stochRsiSlowSeries.createPriceLine({
+    price: 80,
+    color: COLOR.GRAY,
+    lineStyle: 3
+  });
+  stochRsiSlowSeries.createPriceLine({
+    price: 20,
+    color: COLOR.GRAY,
+    lineStyle: 3
+  });
 }

@@ -1,18 +1,17 @@
-import { useNavigate } from'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { ASSETS, TIMEFRAME_OPTIONS as TF } from '../services/consts';
 
 function AssetsPage() {
   const navigate = useNavigate();
 
   function goToAssetDetailsPage(assetName) {
-    navigate(`/assets/${assetName}`);
+    navigate(`/assets/${assetName}/${TF._1D}`);
   }
-
-  const assets = ["BTC", "ETH", "ADA", "ICP", "DOGE"];
 
   return (
     <div>
       <h1>Assets Page</h1>
-      {assets.map((asset) => (
+      {ASSETS.map((asset) => (
         <button key={asset} onClick={() => goToAssetDetailsPage(asset)}>
           {asset}
         </button>

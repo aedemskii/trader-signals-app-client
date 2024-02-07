@@ -10,13 +10,13 @@ import AssetDetailsPage from './components/AssetDetailsPage';
 function App() {  
   return (
     <Router>
-      <div className="App">
+      <div className='App'>
         <Routes>
-          <Route path="/auth" element={<AuthPage />} />
-          <Route path="/assets" element={<AssetsPage />} />
-          <Route path="/assets/:assetName" element={<AssetDetailsPage />} />
+          <Route path='/auth' element={<AuthPage />} />
+          <Route path='/assets' element={<AssetsPage />} />
+          <Route path='/assets/:assetName/:timeframe' element={<AssetDetailsPage />} />
           {/* Redirect to auth page as the default route */}
-          <Route path="*" element={<AuthPage />} />
+          <Route path='*' element={<AuthPage />} />
         </Routes>
       </div>
     </Router>    
