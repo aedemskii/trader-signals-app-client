@@ -11,7 +11,12 @@ export const CandlestickOHLC = ({ candleData }) => {
     if (candleData && candleData.open && candleData.close && candleData.high && candleData.low) {
       setTextColor(candleData.open > candleData.close ? COLOR.GREEN : COLOR.RED);
       setCandle(candleData);
-      let maxLen = Math.max(candleData.open.toString().length, candleData.close.toString().length, candleData.high.toString().length, candleData.low.toString().length);
+      let maxLen = Math.max(
+        candleData.open.toString().length,
+        candleData.close.toString().length,
+        candleData.high.toString().length,
+        candleData.low.toString().length
+        );
       setWidth(maxLen * 9);
     } else if (candle) {
       setCandle(prev => prev);
@@ -19,7 +24,7 @@ export const CandlestickOHLC = ({ candleData }) => {
       setCandle(null);
     }
   }, [candleData]);
-  
+
   return (
     <>
       {candle &&

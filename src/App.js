@@ -15,7 +15,6 @@ function App() {
           <Route path='/auth' element={<AuthPage />} />
           <Route path='/assets' element={<AssetsPage />} />
           <Route path='/assets/:assetName/:timeframe' element={<AssetDetailsPage />} />
-          {/* Redirect to auth page as the default route */}
           <Route path='*' element={<AuthPage />} />
         </Routes>
       </div>

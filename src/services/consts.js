@@ -20,7 +20,7 @@ export const SERVER_DATA_KEYS = {
   MACD_S: 'macd-signal',
   MACD_H: 'macd-hist',
   RSI: 'rsi',
-  BBANDS_SMA: 'bbands_sma',
+  BBANDS_SMA: 'bbands-sma',
   BBANDS_HIGH: 'bbands-higher',
   BBANDS_LOW: 'bbands-lower',
   STOCHRSI_S: 'stochrsi-slow',

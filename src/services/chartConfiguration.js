@@ -30,7 +30,7 @@ export const createMyChart = (container, chartData) => {
   addSMA(chart, smaData);
   addEMA(chart, emaData);
   addRSI(chart, rsiData);
-  addMACD(chart, macdData);  
+  addMACD(chart, macdData);
   addStochRSI(chart, stochRsiData);
 
   // Candlesticks
@@ -66,15 +66,15 @@ const parseChartData = (data) => {
 
   data.forEach((item) => {
     result.smaData.push({
-      time: item[KEY.TIME], 
+      time: item[KEY.TIME],
       value: item[KEY.SMA]
     });
     result.emaData.push({
-      time: item[KEY.TIME], 
+      time: item[KEY.TIME],
       value: item[KEY.EMA],
     });
     result.macdData.fast.push({
-      time: item[KEY.TIME], 
+      time: item[KEY.TIME],
       value: item[KEY.MACD_F],
     });
     result.macdData.slow.push({
@@ -116,11 +116,11 @@ const parseChartData = (data) => {
 };
 
 const addBBands = (chart, data) => {
-    const bbandsUp = chart.addLineSeries({ ...DLSC, color: COLOR.CYAN });
+    const bbandsUp = chart.addLineSeries({ ...DLSC, color: COLOR.GRAY, lineStyle: 1 });
     bbandsUp.setData(data.up);
-    const bbandsMid = chart.addLineSeries({ ...DLSC, color: COLOR.GRAY});
+    const bbandsMid = chart.addLineSeries({ ...DLSC, color: COLOR.GRAY });
     bbandsMid.setData(data.mid);
-    const bbandsLow = chart.addLineSeries({ ...DLSC, color: COLOR.CYAN});
+    const bbandsLow = chart.addLineSeries({ ...DLSC, color: COLOR.GRAY, lineStyle: 1 });
     bbandsLow.setData(data.low);
 }
 

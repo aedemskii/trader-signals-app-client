@@ -15,7 +15,7 @@ const AssetChart = () => {
     (async () => {
       const data = await requestChartData(assetName, timeframe);
       setChartData(data);
-    })();    
+    })();
   }, [assetName, timeframe]);
 
   useEffect(() => {
@@ -30,7 +30,7 @@ const AssetChart = () => {
         chart.applyOptions({ width: chartContainerRef.current.clientWidth });
       };
       window.addEventListener('resize', handleResize);
-      
+
       return () => {
         window.removeEventListener('resize', handleResize);
         chart.remove();
@@ -45,7 +45,7 @@ const AssetChart = () => {
       {chartData.length === 0 ? (
           <div>Loading...</div>
         ) : (
-          <div className='my-chart'>     
+          <div className='my-chart'>
             <div className='tv-chart' ref={chartContainerRef} />
             <div className='title flex'>
                 <div>{`${assetName} / USDT`}&nbsp;&#8226;&nbsp;{`${timeframe}`}&nbsp;&#8226;&nbsp;</div>
