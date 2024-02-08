@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 export const ThemeContext = React.createContext();
 
@@ -12,7 +12,7 @@ export const ThemeProvider = ({children}) => {
 
   const toggleTheme = () => {
     setDarkTheme(!darkTheme);
-    localStorage.setItem('theme', !darkTheme);
+    localStorage.setItem('theme', JSON.stringify(!darkTheme));
   }
 
   return (
