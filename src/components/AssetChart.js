@@ -40,7 +40,7 @@ const AssetChart = () => {
 
 
   return (
-    <div>
+    <>
       <h2>{`${assetName} Price History Chart`}</h2>
       {chartData.length === 0 ? (
           <div>Loading...</div>
@@ -53,7 +53,7 @@ const AssetChart = () => {
             </div>
           </div>
         )}
-    </div>
+    </>
   );
 };
 

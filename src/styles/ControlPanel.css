@@ -1,0 +1,41 @@
+div.control-panel {
+  position: sticky;
+  top: 0;
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px;
+  background-color: blanchedalmond;
+}
+
+div.control-panel > div {
+  position: relative;
+  display: flex;
+}
+
+div.control-panel > div.title {
+  font-size: 24px;
+}
+
+div.controls > div.control {
+  height: 30px;
+  width: 30px;
+  margin-left: 15px;
+  cursor: pointer;
+}
+
+div.controls > div.control:first-of-type {
+  margin-left: 0;
+}
+
+div.control-panel > div.controls > div.control.theme.dark {
+  background-color: darkslategray
+}
+
+div.control-panel > div.controls > div.control.theme.light {
+  background-color: cadetblue;
+}
+
+div.control-panel > div.controls > div.control.log-out {
+  background-color: chocolate;
+}
