@@ -20,7 +20,8 @@ export const requestAuth = async (password) => {
   }
 };
 
-export const requestChartData = async (assetName, timeframe) => {
+export const requestChartData = async (chartConfig) => {
+  const { assetName, timeframe } = chartConfig;
   try {
     const response = await fetch(`${API_BASE_URL}/assets/${assetName}/${timeframe}`);
     if (!response.ok) {

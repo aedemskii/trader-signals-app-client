@@ -11,7 +11,7 @@ function AssetsPage() {
   return (
     <div>
       <h1>Assets Page</h1>
-      {ASSETS.map((asset) => (
+      {Object.keys(ASSETS).map((asset) => (
         <button key={asset} onClick={() => goToAssetDetailsPage(asset)}>
           {asset}
         </button>

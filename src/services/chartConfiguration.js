@@ -1,7 +1,7 @@
 import { createChart, ColorType } from 'lightweight-charts';
 import { COLOR, SERVER_DATA_KEYS as KEY, DEFAULT_LINE_SERIES_CONFIG as DLSC } from './consts';
 
-export const createMyChart = (container, chartData) => {
+export const createMyChart = (container, chartData, indicatorsVisibles) => {
   const chart = createChart(container, {
     layout: {
       background: { type: ColorType.Solid, color: COLOR.WHITE },
@@ -26,12 +26,18 @@ export const createMyChart = (container, chartData) => {
   } = parseChartData(chartData)
 
   // Setting indicators
-  addBBands(chart, bbandsData);
-  addSMA(chart, smaData);
-  addEMA(chart, emaData);
-  addRSI(chart, rsiData);
-  addMACD(chart, macdData);
-  addStochRSI(chart, stochRsiData);
+  if (indicatorsVisibles.bbands)
+    addBBands(chart, bbandsData);
+  if (indicatorsVisibles.sma)
+    addSMA(chart, smaData);
+  if (indicatorsVisibles.ema)
+    addEMA(chart, emaData);
+  if (indicatorsVisibles.rsi)
+    addRSI(chart, rsiData);
+  if (indicatorsVisibles.macd)
+    addMACD(chart, macdData);
+  if (indicatorsVisibles.stochrsi)
+    addStochRSI(chart, stochRsiData);
 
   // Candlesticks
   const candlestickSeries = chart.addCandlestickSeries();

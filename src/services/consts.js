@@ -47,4 +47,61 @@ export const TIMEFRAME_OPTIONS = {
   _1M: '1M',
 };
 
-export const ASSETS = ['BTC', 'ETH', 'ADA', 'ICP', 'DOGE'];
+export const ASSETS = {
+  BTC: 'BTC',
+  ETH: 'ETH',
+  ADA: 'ADA',
+  ICP: 'ICP',
+  DOGE: 'DOGE'
+};
+
+export const CHART_CONFIG_REDUCER_ACTIONS = {
+  // ASSET_NAME
+  SET_ASSET_NAME: 'SET_ASSET_NAME',
+  // TIMEFRAME
+  SET_TIMEFRAME: 'SET_TIMEFRAME',
+  // CONFIG
+  GET_DEFAULT_CONFIG: 'GET_DEFAULT_CONFIG',
+  SET_CONFIG: 'SET_CHART_CONFIG',
+  CLEAR_CONFIG: 'CLEAR_CHART_CONFIG',
+  // INDICATORS
+  TOGGLE_INDICATOR: 'TOGGLE_INDICATOR',
+  TINKER_INDICATOR: 'TINKER_INDICATOR',
+};
+
+export const DEFAULT_CHART_CONFIG = {
+  assetName: ASSETS.BTC,
+  timeframe: TIMEFRAME_OPTIONS._1D,
+  indicatorsVisibles: {
+    'sma': true,
+    'ema': true,
+    'rsi': true,
+    'macd': true,
+    'bbands': true,
+    'stochrsi': true
+  },
+  indicatorsConfigs: {
+      'sma': {
+        length: 200
+      },
+      'ema': {
+        length: 50
+      },
+      'rsi': {
+        length: 14
+      },
+      'macd': {
+        fastPeriod: 12,
+        slowPeriod: 26,
+        signalPeriod: 9
+      },
+      'bbands': {
+        length: 20
+      },
+      'stochrsi': {
+        length: 14,
+        kPeriod: 3,
+        dPeriod: 3
+      }
+  },
+};

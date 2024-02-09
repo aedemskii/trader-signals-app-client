@@ -10,8 +10,8 @@ import AssetDetailsPage from './components/AssetDetailsPage';
 
 function App() {
   return (
-    <Router>
-      <>
+    <>
+      <Router>
         <ThemeProvider>
           <Routes>
             <Route path='/auth' element={<AuthPage />} />
@@ -20,8 +20,8 @@ function App() {
             <Route path='*' element={<AuthPage />} />
           </Routes>
         </ThemeProvider>
-      </>
-    </Router>
+      </Router>
+    </>
   );
 }
 

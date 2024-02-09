@@ -1,26 +1,27 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { useParams } from 'react-router-dom';
+import React, { useState, useEffect, useRef, useContext } from 'react';
 import '../styles/AssetChart.css';
 import { requestChartData } from '../services/serverRequests';
 import { createMyChart } from '../services/chartConfiguration';
 import { CandlestickOHLC } from './CandlestickOHLC';
+import { ChartContext } from '../contexts/ChartContext';
 
 const AssetChart = () => {
   const [ chartData, setChartData ] = useState([]);
   const [ candleData, setCandleData ] = useState(null);
-  const { assetName, timeframe } = useParams();
   const chartContainerRef = useRef();
+  const { chartConfig } = useContext(ChartContext);
+  const { assetName, timeframe, indicatorsVisibles } = chartConfig;
 
   useEffect(() => {
     (async () => {
-      const data = await requestChartData(assetName, timeframe);
+      const data = await requestChartData(chartConfig);
       setChartData(data);
     })();
   }, [assetName, timeframe]);
 
   useEffect(() => {
-    if (chartContainerRef.current) {
-      const { chart, candlestickSeries } = createMyChart(chartContainerRef.current, chartData);
+    if (chartContainerRef.current && indicatorsVisibles) {
+      const { chart, candlestickSeries } = createMyChart(chartContainerRef.current, chartData, indicatorsVisibles);
 
       chart.subscribeCrosshairMove((param) => {
         setCandleData({...param.seriesData.get(candlestickSeries)})
@@ -36,7 +37,7 @@ const AssetChart = () => {
         chart.remove();
       };
     }
-  }, [chartData]);
+  }, [chartData, indicatorsVisibles]);
 
 
   return (
