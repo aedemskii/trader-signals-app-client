@@ -9,12 +9,8 @@ import {
 export const ChartContext = React.createContext();
 
 export const ChartProvider = ({children}) => {
-  const [ chartConfig, chartConfigDispatch ] = useReducer(chartConfigReducer, DEFAULT_CHART_CONFIG);
-
-  useEffect(() => {
-    const config = JSON.parse(localStorage.getItem('chartConfig'));
-    chartConfigDispatch({ type: ACTIONS.SET_CONFIG, payload: config});
-  }, []);
+  const initialChartConfig = JSON.parse(localStorage.getItem('chartConfig')) || DEFAULT_CHART_CONFIG;
+  const [ chartConfig, chartConfigDispatch ] = useReducer(chartConfigReducer, initialChartConfig);
 
   useEffect(() => {
     localStorage.setItem('chartConfig', JSON.stringify(chartConfig));
@@ -51,7 +47,7 @@ const chartConfigReducer = (chartConfig, action) => {
         return chartConfig;
       }
     }
-    case ACTIONS.GET_DEFAULT_CONFIG:
+    case ACTIONS.SET_DEFAULT_CONFIG:
       return DEFAULT_CHART_CONFIG;
     case ACTIONS.SET_CONFIG:
     {
