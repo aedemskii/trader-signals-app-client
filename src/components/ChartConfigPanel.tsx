@@ -1,18 +1,29 @@
-import React, { useContext } from 'react';
-import { ChartContext } from '../contexts/ChartContext';
-import { CHART_CONFIG_REDUCER_ACTIONS as ACTIONS, ASSETS, TIMEFRAME_OPTIONS } from '../services/consts';
+import React from 'react';
+import { useChartContext } from '../hooks/ChartContext';
+import { CHART_CONFIG_REDUCER_ACTIONS as ACTIONS, ASSETS, TIMEFRAMES } from '../services/consts';
+import { TAsset, TTimeframe, TIndicatorName } from '../services/types';
 import '../styles/utils.css'
 
 export const ChartConfigPanel = () => {
-  const { chartConfig, chartConfigDispatch } = useContext(ChartContext);
+  const { chartConfig, chartConfigDispatch } = useChartContext();
   const { assetName, timeframe, indicatorsVisibles } = chartConfig;
 
-  const setIndicatorVisible = (indicatorName) => {
+  const setIndicatorVisible = (indicatorName: TIndicatorName) => {
     chartConfigDispatch({
       type: ACTIONS.TOGGLE_INDICATOR,
       payload: { indicatorName }
     });
   };
+
+  const handleAssetChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const assetName = e.currentTarget.value as TAsset;
+    chartConfigDispatch({ type: ACTIONS.SET_ASSET_NAME, payload: {assetName: assetName}})
+  }
+
+  const handleTimeframeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const timeframe = e.currentTarget.value as TTimeframe;
+    chartConfigDispatch({ type: ACTIONS.SET_TIMEFRAME, payload: {timeframe: timeframe}})
+  }
 
   return (
     <div className='chart-config-panel'>
@@ -22,14 +33,14 @@ export const ChartConfigPanel = () => {
           <div>Asset:</div>
           <select
             defaultValue={assetName}
-            onChange={(e) => chartConfigDispatch({ type: ACTIONS.SET_ASSET_NAME, payload: {assetName: e.currentTarget.value}})} 
+            onChange={handleAssetChange}
           >
             {
               Object.keys(ASSETS).map((asset) => (
                 <option
                   key={asset}
-                  value={ASSETS[asset]}>
-                    {ASSETS[asset]}
+                  value={ASSETS[asset as keyof typeof ASSETS]}>
+                    {ASSETS[asset as keyof typeof ASSETS]}
                 </option>
               ))
             }
@@ -39,14 +50,14 @@ export const ChartConfigPanel = () => {
           <div>Timeframe:</div>
           <select
             defaultValue={timeframe}
-            onChange={(e) => chartConfigDispatch({ type: ACTIONS.SET_TIMEFRAME, payload: {timeframe: e.currentTarget.value}})} 
+            onChange={handleTimeframeChange}
           >
             {
-              Object.keys(TIMEFRAME_OPTIONS).map((timeframe_option) => (
+              Object.keys(TIMEFRAMES).map((timeframe_option) => (
                 <option
                   key={timeframe_option}
-                  value={TIMEFRAME_OPTIONS[timeframe_option]}>
-                    {TIMEFRAME_OPTIONS[timeframe_option]}
+                  value={TIMEFRAMES[timeframe_option as keyof typeof TIMEFRAMES]}>
+                    {TIMEFRAMES[timeframe_option as keyof typeof TIMEFRAMES]}
                 </option>
               ))
             }
@@ -56,7 +67,7 @@ export const ChartConfigPanel = () => {
           <div>Indicators:</div>
           <div className='flex margin-lr-10'>
             <input
-              type='checkbox' 
+              type='checkbox'
               checked={indicatorsVisibles.sma}
               onChange={(e) => setIndicatorVisible('sma')}
               />
@@ -72,7 +83,7 @@ export const ChartConfigPanel = () => {
           </div>
           <div className='flex margin-lr-10'>
             <input
-              type='checkbox' 
+              type='checkbox'
               checked={indicatorsVisibles.rsi}
               onChange={(e) => setIndicatorVisible('rsi')}
               />
@@ -80,7 +91,7 @@ export const ChartConfigPanel = () => {
           </div>
           <div className='flex margin-lr-10'>
             <input
-              type='checkbox' 
+              type='checkbox'
               checked={indicatorsVisibles.macd}
               onChange={(e) => setIndicatorVisible('macd')}
               />
@@ -88,7 +99,7 @@ export const ChartConfigPanel = () => {
           </div>
           <div className='flex margin-lr-10'>
             <input
-              type='checkbox' 
+              type='checkbox'
               checked={indicatorsVisibles.bbands}
               onChange={(e) => setIndicatorVisible('bbands')}
               />
@@ -96,14 +107,14 @@ export const ChartConfigPanel = () => {
           </div>
           <div className='flex margin-lr-10'>
             <input
-              type='checkbox' 
+              type='checkbox'
               checked={indicatorsVisibles.stochrsi}
               onChange={(e) => setIndicatorVisible('stochrsi')}
               />
             <div>STOCHRSI</div>
           </div>
         </div>
-        <div/>
+        <div />
       </div>
     </div>
   );

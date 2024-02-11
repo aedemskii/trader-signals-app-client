@@ -3,7 +3,7 @@ import { requestAuth } from '../services/serverRequests';
 
 function AuthPage() {
   const navigate = useNavigate();
-  
+
   async function enterApp() {
     const data = await requestAuth('please enter app');
     if (data === null) {
@@ -21,5 +21,5 @@ function AuthPage() {
     </div>
   );
 };
-  
+
 export default AuthPage;

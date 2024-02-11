@@ -1,3 +1,5 @@
+import { TChartConfig } from "./types";
+
 export const COLOR = {
   BLACK: 'black',
   BLUE: 'blue',
@@ -10,10 +12,14 @@ export const COLOR = {
   RED: 'red',
   WHITE: 'white',
   YELLOW: 'yellow',
-};
+} as const;
 
 export const SERVER_DATA_KEYS = {
   TIME: 'time',
+  OPEN: 'open',
+  HIGH: 'high',
+  LOW: 'low',
+  CLOSE: 'close',
   SMA: 'sma',
   EMA: 'ema',
   MACD_F: 'macd-macd',
@@ -25,16 +31,24 @@ export const SERVER_DATA_KEYS = {
   BBANDS_LOW: 'bbands-lower',
   STOCHRSI_S: 'stochrsi-slow',
   STOCHRSI_F: 'stochrsi-fast',
-};
+} as const;
 
 export const DEFAULT_LINE_SERIES_CONFIG = {
   lineWidth: 1,
   priceLineVisible: false,
   lastValueVisible: false,
   crosshairMarkerVisible: false,
-};
+} as const;
 
-export const TIMEFRAME_OPTIONS = {
+export const ASSETS = {
+  BTC: 'BTC',
+  ETH: 'ETH',
+  ADA: 'ADA',
+  ICP: 'ICP',
+  DOGE: 'DOGE'
+} as const;
+
+export const TIMEFRAMES = {
   _15M: '15m',
   _30M: '30m',
   _1H: '1h',
@@ -45,15 +59,16 @@ export const TIMEFRAME_OPTIONS = {
   _1W: '1W',
   _2W: '2W',
   _1M: '1M',
-};
+} as const;
 
-export const ASSETS = {
-  BTC: 'BTC',
-  ETH: 'ETH',
-  ADA: 'ADA',
-  ICP: 'ICP',
-  DOGE: 'DOGE'
-};
+export const INDICATORS = {
+  SMA: 'sma',
+  EMA: 'ema',
+  RSI: 'rsi',
+  MACD:'macd',
+  BBANDS: 'bbands',
+  STOCHRSI:'stochrsi',
+} as const;
 
 export const CHART_CONFIG_REDUCER_ACTIONS = {
   // ASSET_NAME
@@ -63,15 +78,14 @@ export const CHART_CONFIG_REDUCER_ACTIONS = {
   // CONFIG
   SET_DEFAULT_CONFIG: 'SET_DEFAULT_CONFIG',
   SET_CONFIG: 'SET_CHART_CONFIG',
-  CLEAR_CONFIG: 'CLEAR_CHART_CONFIG',
   // INDICATORS
   TOGGLE_INDICATOR: 'TOGGLE_INDICATOR',
   TINKER_INDICATOR: 'TINKER_INDICATOR',
 };
 
-export const DEFAULT_CHART_CONFIG = {
+export const DEFAULT_CHART_CONFIG: TChartConfig = {
   assetName: ASSETS.BTC,
-  timeframe: TIMEFRAME_OPTIONS._1D,
+  timeframe: TIMEFRAMES._1D,
   indicatorsVisibles: {
     'sma': true,
     'ema': true,
@@ -104,4 +118,14 @@ export const DEFAULT_CHART_CONFIG = {
         dPeriod: 3
       }
   },
-};
+} as const;
+
+export const DEFAULT_PRICE_LINE_CONFIG = {
+  price: 50,
+  color: 'gray',
+  lineStyle: 1,
+  lineWidth: 1,
+  lineVisible: true,
+  axisLabelVisible: true,
+  title: '',
+} as const;

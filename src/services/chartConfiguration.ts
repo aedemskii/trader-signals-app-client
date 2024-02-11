@@ -1,7 +1,8 @@
-import { createChart, ColorType } from 'lightweight-charts';
-import { COLOR, SERVER_DATA_KEYS as KEY, DEFAULT_LINE_SERIES_CONFIG as DLSC } from './consts';
+import { createChart, ColorType, IChartApi, SingleValueData, CandlestickData, Time } from 'lightweight-charts';
+import { COLOR, SERVER_DATA_KEYS as KEY, DEFAULT_LINE_SERIES_CONFIG as DLSC, DEFAULT_PRICE_LINE_CONFIG } from './consts';
+import { TIndicatorsVisibles, TServerChartDataItem } from './types';
 
-export const createMyChart = (container, chartData, indicatorsVisibles) => {
+export const createMyChart = (container: HTMLDivElement, chartData: TServerChartDataItem[], indicatorsVisibles: TIndicatorsVisibles) => {
   const chart = createChart(container, {
     layout: {
       background: { type: ColorType.Solid, color: COLOR.WHITE },
@@ -11,12 +12,12 @@ export const createMyChart = (container, chartData, indicatorsVisibles) => {
       mode: 0,
     },
     width: container.clientWidth,
-    height: 500,
-    pane: 0,
+    height: 500
   });
   chart.timeScale().fitContent();
 
   const {
+    candlestickData,
     smaData,
     emaData,
     macdData,
@@ -41,7 +42,7 @@ export const createMyChart = (container, chartData, indicatorsVisibles) => {
 
   // Candlesticks
   const candlestickSeries = chart.addCandlestickSeries();
-  candlestickSeries.setData(chartData);
+  candlestickSeries.setData(candlestickData);
 
   return {
     chart: chart,
@@ -49,8 +50,32 @@ export const createMyChart = (container, chartData, indicatorsVisibles) => {
   };
 };
 
-const parseChartData = (data) => {
-  const result = {
+const parseChartData = (data: TServerChartDataItem[]) => {
+  const result: {
+    candlestickData: CandlestickData[],
+    smaData: SingleValueData[],
+    emaData: SingleValueData[],
+    rsiData: SingleValueData[],
+    bbandsData: {
+      up: SingleValueData[],
+      mid: SingleValueData[],
+      low: SingleValueData[],
+    },
+    macdData: {
+      fast: SingleValueData[],
+      slow: SingleValueData[],
+      hist: {
+        time: Time,
+        value: number,
+        color: string,
+      }[],
+    },
+    stochRsiData: {
+      slow: SingleValueData[],
+      fast: SingleValueData[],
+    }
+  } = {
+    candlestickData: [],
     smaData: [],
     emaData: [],
     macdData: {
@@ -70,50 +95,57 @@ const parseChartData = (data) => {
     }
   }
 
-  data.forEach((item) => {
+  data.forEach((item: TServerChartDataItem) => {
+    result.candlestickData.push({
+      time: item[KEY.TIME] as Time,
+      open: item[KEY.OPEN],
+      high: item[KEY.HIGH],
+      low: item[KEY.LOW],
+      close: item[KEY.CLOSE],
+    });
     result.smaData.push({
-      time: item[KEY.TIME],
+      time: item[KEY.TIME] as Time,
       value: item[KEY.SMA]
     });
     result.emaData.push({
-      time: item[KEY.TIME],
+      time: item[KEY.TIME] as Time,
       value: item[KEY.EMA],
     });
     result.macdData.fast.push({
-      time: item[KEY.TIME],
+      time: item[KEY.TIME] as Time,
       value: item[KEY.MACD_F],
     });
     result.macdData.slow.push({
-      time: item[KEY.TIME],
+      time: item[KEY.TIME] as Time,
       value: item[KEY.MACD_S],
     });
     result.macdData.hist.push({
-      time: item[KEY.TIME],
+      time: item[KEY.TIME] as Time,
       value: item[KEY.MACD_H],
       color: item[KEY.MACD_H] > 0? COLOR.GREEN : COLOR.RED,
     });
     result.rsiData.push({
-      time: item[KEY.TIME],
+      time: item[KEY.TIME] as Time,
       value: item[KEY.RSI],
     });
     result.bbandsData.up.push({
-      time: item[KEY.TIME],
+      time: item[KEY.TIME] as Time,
       value: item[KEY.BBANDS_HIGH],
     });
     result.bbandsData.mid.push({
-      time: item[KEY.TIME],
+      time: item[KEY.TIME] as Time,
       value: item[KEY.BBANDS_SMA],
     });
     result.bbandsData.low.push({
-      time: item[KEY.TIME],
+      time: item[KEY.TIME] as Time,
       value: item[KEY.BBANDS_LOW],
     });
     result.stochRsiData.slow.push({
-      time: item[KEY.TIME],
+      time: item[KEY.TIME] as Time,
       value: item[KEY.STOCHRSI_S],
     });
     result.stochRsiData.fast.push({
-      time: item[KEY.TIME],
+      time: item[KEY.TIME] as Time,
       value: item[KEY.STOCHRSI_F],
     });
   });
@@ -121,7 +153,7 @@ const parseChartData = (data) => {
   return result;
 };
 
-const addBBands = (chart, data) => {
+const addBBands = (chart: IChartApi, data: {up: SingleValueData[], mid: SingleValueData[], low: SingleValueData[]}) => {
     const bbandsUp = chart.addLineSeries({ ...DLSC, color: COLOR.GRAY, lineStyle: 1 });
     bbandsUp.setData(data.up);
     const bbandsMid = chart.addLineSeries({ ...DLSC, color: COLOR.GRAY });
@@ -130,32 +162,34 @@ const addBBands = (chart, data) => {
     bbandsLow.setData(data.low);
 }
 
-const addSMA = (chart, data) => {
+const addSMA = (chart: IChartApi, data: SingleValueData[]) => {
   const smaSeries = chart.addLineSeries({ ...DLSC, color: COLOR.BLUE});
   smaSeries.setData(data);
 }
 
-const addEMA = (chart, data) => {
+const addEMA = (chart: IChartApi, data: SingleValueData[]) => {
   const emaSeries = chart.addLineSeries({ ...DLSC, color: COLOR.MAGENTA});
   emaSeries.setData(data);
 }
 
-const addRSI = (chart, data) => {
+const addRSI = (chart: IChartApi, data: SingleValueData[]) => {
   const rsiSeries = chart.addLineSeries({ ...DLSC, color: COLOR.PURPLE, pane: 1 });
   rsiSeries.setData(data);
   rsiSeries.createPriceLine({
+    ...DEFAULT_PRICE_LINE_CONFIG,
     price: 70,
     color: COLOR.GRAY,
     lineStyle: 3
   });
   rsiSeries.createPriceLine({
+    ...DEFAULT_PRICE_LINE_CONFIG,
     price: 30,
     color: COLOR.GRAY,
     lineStyle: 3
   });
 }
 
-const addMACD = (chart, data) => {
+const addMACD = (chart: IChartApi, data: {fast: SingleValueData[], slow: SingleValueData[], hist: SingleValueData[]}) => {
   const macdFastSeries = chart.addLineSeries({ ...DLSC, color: COLOR.ORANGE, pane: 2 });
   macdFastSeries.setData(data.fast);
   const macdSlowSeries = chart.addLineSeries({ ...DLSC, color: COLOR.BLUE, pane: 2 });
@@ -164,17 +198,19 @@ const addMACD = (chart, data) => {
   macdHistogramSeries.setData(data.hist);
 }
 
-const addStochRSI = (chart, data) => {
+const addStochRSI = (chart: IChartApi, data: {slow: SingleValueData[], fast: SingleValueData[]}) => {
   const stochRsiSlowSeries = chart.addLineSeries({...DLSC, color: COLOR.RED, pane: 3 });
   stochRsiSlowSeries.setData(data.slow);
   const stochRsiFastSeries = chart.addLineSeries({...DLSC, color: COLOR.GREEN, pane: 3 });
   stochRsiFastSeries.setData(data.fast);
   stochRsiSlowSeries.createPriceLine({
+    ...DEFAULT_PRICE_LINE_CONFIG,
     price: 80,
     color: COLOR.GRAY,
     lineStyle: 3
   });
   stochRsiSlowSeries.createPriceLine({
+    ...DEFAULT_PRICE_LINE_CONFIG,
     price: 20,
     color: COLOR.GRAY,
     lineStyle: 3

@@ -1,17 +1,18 @@
 import { useNavigate } from 'react-router-dom';
-import { ASSETS, TIMEFRAME_OPTIONS as TF } from '../services/consts';
+import { ASSETS, TIMEFRAMES as TF } from '../services/consts';
+import { TAsset } from '../services/types';
 
 function AssetsPage() {
   const navigate = useNavigate();
 
-  function goToAssetDetailsPage(assetName) {
+  function goToAssetDetailsPage(assetName: TAsset) {
     navigate(`/assets/${assetName}/${TF._1D}`);
   }
 
   return (
     <div>
       <h1>Assets Page</h1>
-      {Object.keys(ASSETS).map((asset) => (
+      {Object.values(ASSETS).map((asset) => (
         <button key={asset} onClick={() => goToAssetDetailsPage(asset)}>
           {asset}
         </button>

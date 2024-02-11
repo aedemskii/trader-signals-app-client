@@ -1,6 +1,7 @@
+import { TChartConfig } from "./types";
 const API_BASE_URL = 'http://127.0.0.1:5000';
 
-export const requestAuth = async (password) => {
+export const requestAuth = async (password: string) => {
   try {
     const response = await fetch(`${API_BASE_URL}`, {
       method: 'POST',
@@ -20,7 +21,7 @@ export const requestAuth = async (password) => {
   }
 };
 
-export const requestChartData = async (chartConfig) => {
+export const requestChartData = async (chartConfig: TChartConfig) => {
   const { assetName, timeframe } = chartConfig;
   try {
     const response = await fetch(`${API_BASE_URL}/assets/${assetName}/${timeframe}`);

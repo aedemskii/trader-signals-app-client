@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { COLOR } from '../services/consts';
 import '../styles/utils.css';
+import { TCandleData, TColor } from '../services/types';
 
-export const CandlestickOHLC = ({ candleData }) => {
-  const [ textColor, setTextColor ] = useState(COLOR.BLACK);
-  const [ candle, setCandle ] = useState(null);
+// TODO - candleData: any - fix
+export const CandlestickOHLC = (candleData: any) => {
+  const [ textColor, setTextColor ] = useState<TColor>(COLOR.BLACK);
+  const [ candle, setCandle ] = useState<TCandleData | null>(null);
   const [ width, setWidth ] = useState(0);
 
   useEffect(() => {

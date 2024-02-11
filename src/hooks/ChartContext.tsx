@@ -1,15 +1,17 @@
-import React, { useReducer, useEffect } from 'react';
+import React, { useReducer, useEffect, useContext } from 'react';
 import {
   ASSETS,
-  TIMEFRAME_OPTIONS,
+  TIMEFRAMES,
   CHART_CONFIG_REDUCER_ACTIONS as ACTIONS,
   DEFAULT_CHART_CONFIG
 } from '../services/consts';
+import { TChartConfig, TChartConfigReducerAction, TChartContext } from '../services/types';
 
-export const ChartContext = React.createContext();
+const ChartContext = React.createContext<TChartContext|null>(null);
 
-export const ChartProvider = ({children}) => {
-  const initialChartConfig = JSON.parse(localStorage.getItem('chartConfig')) || DEFAULT_CHART_CONFIG;
+export const ChartProvider = ({ children }: { children: React.ReactNode }) => {
+  const chartConfigLS = localStorage.getItem('chartConfig');
+  const initialChartConfig = chartConfigLS ? JSON.parse(chartConfigLS) : DEFAULT_CHART_CONFIG;
   const [ chartConfig, chartConfigDispatch ] = useReducer(chartConfigReducer, initialChartConfig);
 
   useEffect(() => {
@@ -23,7 +25,15 @@ export const ChartProvider = ({children}) => {
   );
 }
 
-const chartConfigReducer = (chartConfig, action) => {
+export const useChartContext = () => {
+  const context = useContext(ChartContext);
+  if (context === null) {
+    throw new Error('useChartContext must be used within a ChartProvider');
+  }
+  return context;
+};
+
+const chartConfigReducer = (chartConfig: TChartConfig, action: TChartConfigReducerAction): TChartConfig => {
   switch (action.type) {
     case ACTIONS.SET_ASSET_NAME:
     {
@@ -38,7 +48,7 @@ const chartConfigReducer = (chartConfig, action) => {
     }
     case ACTIONS.SET_TIMEFRAME:
     {
-      if (action.payload?.timeframe && Object.values(TIMEFRAME_OPTIONS).includes(action.payload.timeframe)) {
+      if (action.payload?.timeframe && Object.values(TIMEFRAMES).includes(action.payload.timeframe)) {
         return {
           ...chartConfig,
           timeframe: action.payload.timeframe
@@ -52,16 +62,11 @@ const chartConfigReducer = (chartConfig, action) => {
     case ACTIONS.SET_CONFIG:
     {
       if (action.payload) {
-        return action.payload;
+        return { ...DEFAULT_CHART_CONFIG, ...action.payload };
       } else {
         return chartConfig;
       }
     }
-    case ACTIONS.CLEAR_CONFIG:
-      return {
-        assetName: chartConfig.assetName,
-        timeframe: chartConfig.timeframe
-      };
     case ACTIONS.TOGGLE_INDICATOR:
     {
       if (!action.payload?.indicatorName)

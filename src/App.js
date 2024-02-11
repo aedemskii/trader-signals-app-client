@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { ThemeProvider } from './contexts/ThemeContext';
+import { ThemeProvider } from './hooks/ThemeContext';
 
 import AuthPage from './components/AuthPage';
 import AssetsPage from './components/AssetsPage';

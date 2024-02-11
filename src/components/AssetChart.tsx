@@ -1,15 +1,16 @@
-import React, { useState, useEffect, useRef, useContext } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import '../styles/AssetChart.css';
 import { requestChartData } from '../services/serverRequests';
 import { createMyChart } from '../services/chartConfiguration';
 import { CandlestickOHLC } from './CandlestickOHLC';
-import { ChartContext } from '../contexts/ChartContext';
+import { useChartContext } from '../hooks/ChartContext';
+import { TCandleData } from '../services/types';
 
 const AssetChart = () => {
   const [ chartData, setChartData ] = useState([]);
-  const [ candleData, setCandleData ] = useState(null);
-  const chartContainerRef = useRef();
-  const { chartConfig } = useContext(ChartContext);
+  const [ candleData, setCandleData ] = useState<TCandleData|null>(null);
+  const chartContainerRef = useRef<HTMLDivElement | null>(null);
+  const { chartConfig } = useChartContext();
   const { assetName, timeframe, indicatorsVisibles } = chartConfig;
 
   useEffect(() => {
@@ -20,15 +21,16 @@ const AssetChart = () => {
   }, [assetName, timeframe]);
 
   useEffect(() => {
-    if (chartContainerRef.current && indicatorsVisibles) {
+    if (chartContainerRef?.current && indicatorsVisibles) {
       const { chart, candlestickSeries } = createMyChart(chartContainerRef.current, chartData, indicatorsVisibles);
 
       chart.subscribeCrosshairMove((param) => {
-        setCandleData({...param.seriesData.get(candlestickSeries)})
+        setCandleData({...param.seriesData.get(candlestickSeries)} as TCandleData)
       })
 
       const handleResize = () => {
-        chart.applyOptions({ width: chartContainerRef.current.clientWidth });
+        if (chartContainerRef.current?.clientWidth)
+          chart.applyOptions({ width: chartContainerRef.current.clientWidth });
       };
       window.addEventListener('resize', handleResize);
 
