@@ -1,5 +1,5 @@
 import React from 'react';
-import { useChartContext } from '../hooks/ChartContext';
+import { useChartContext } from '../hooks/useChartContext';
 import { CHART_CONFIG_REDUCER_ACTIONS as ACTIONS, ASSETS, TIMEFRAMES } from '../services/consts';
 import { TAsset, TTimeframe, TIndicatorName } from '../services/types';
 import '../styles/utils.css'

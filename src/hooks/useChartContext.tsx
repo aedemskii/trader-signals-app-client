@@ -9,7 +9,7 @@ import { TChartConfig, TChartConfigReducerAction, TChartContext } from '../servi
 
 const ChartContext = React.createContext<TChartContext|null>(null);
 
-export const ChartProvider = ({ children }: { children: React.ReactNode }) => {
+export const ChartContextProvider = ({ children }: { children: React.ReactNode }) => {
   const chartConfigLS = localStorage.getItem('chartConfig');
   const initialChartConfig = chartConfigLS ? JSON.parse(chartConfigLS) : DEFAULT_CHART_CONFIG;
   const [ chartConfig, chartConfigDispatch ] = useReducer(chartConfigReducer, initialChartConfig);
@@ -28,7 +28,7 @@ export const ChartProvider = ({ children }: { children: React.ReactNode }) => {
 export const useChartContext = () => {
   const context = useContext(ChartContext);
   if (context === null) {
-    throw new Error('useChartContext must be used within a ChartProvider');
+    throw new Error('useChartContext must be used within a ChartContextProvider');
   }
   return context;
 };

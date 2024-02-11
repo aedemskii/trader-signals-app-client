@@ -3,7 +3,7 @@ import { TThemeContext } from '../services/types';
 
 const ThemeContext = React.createContext<TThemeContext|null>(null);
 
-export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
+export const ThemeContextProvider = ({ children }: { children: React.ReactNode }) => {
   const [darkTheme, setDarkTheme] = useState(false);
 
   useEffect(() => {
@@ -27,7 +27,7 @@ export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
 export const useThemeContext = () => {
   const context = useContext(ThemeContext);
   if (context === null) {
-    throw new Error('useThemeContext must be used within a ThemeProvider');
+    throw new Error('useThemeContext must be used within a ThemeContextProvider');
   }
   return context;
 };

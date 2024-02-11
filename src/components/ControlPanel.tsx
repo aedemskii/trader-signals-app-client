@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useThemeContext } from '../hooks/ThemeContext';
+import { useThemeContext } from '../hooks/useThemeContext';
 import '../styles/ControlPanel.css';
 
 export const ControlPanel = () => {

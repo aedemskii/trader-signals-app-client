@@ -3,7 +3,7 @@ import '../styles/AssetChart.css';
 import { requestChartData } from '../services/serverRequests';
 import { createMyChart } from '../services/chartConfiguration';
 import { CandlestickOHLC } from './CandlestickOHLC';
-import { useChartContext } from '../hooks/ChartContext';
+import { useChartContext } from '../hooks/useChartContext';
 import { TCandleData } from '../services/types';
 
 const AssetChart = () => {
