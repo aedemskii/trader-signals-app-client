@@ -4,7 +4,7 @@ div.my-chart {
     padding: 2px;
 }
 
-div.my-chart ~ div.title {
+div.my-chart > div.title {
     position: absolute;
     top: 0;
     left: 0;

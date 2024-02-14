@@ -3,14 +3,13 @@ import { COLOR } from '../services/consts';
 import '../styles/utils.css';
 import { TCandleData, TColor } from '../services/types';
 
-// TODO - candleData: any - fix
-export const CandlestickOHLC = (candleData: any) => {
+export const CandlestickOHLC = ({ candleData } : { candleData: TCandleData | null }) => {
   const [ textColor, setTextColor ] = useState<TColor>(COLOR.BLACK);
   const [ candle, setCandle ] = useState<TCandleData | null>(null);
   const [ width, setWidth ] = useState(0);
 
   useEffect(() => {
-    if (candleData && candleData.open && candleData.close && candleData.high && candleData.low) {
+    if (candleData) {
       setTextColor(candleData.open > candleData.close ? COLOR.GREEN : COLOR.RED);
       setCandle(candleData);
       let maxLen = Math.max(
@@ -19,7 +18,7 @@ export const CandlestickOHLC = (candleData: any) => {
         candleData.high.toString().length,
         candleData.low.toString().length
         );
-      setWidth(maxLen * 9);
+      setWidth(maxLen * 9); // TODO - remove magic number
     } else if (candle) {
       setCandle(prev => prev);
     } else {
@@ -27,6 +26,7 @@ export const CandlestickOHLC = (candleData: any) => {
     }
   }, [candleData]);
 
+  // TODO - handle repeating code
   return (
     <>
       {candle &&

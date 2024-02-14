@@ -1,7 +1,8 @@
-import { createChart, ColorType, IChartApi, SingleValueData, CandlestickData, Time } from 'lightweight-charts';
+import { createChart, ColorType, IChartApi, SingleValueData, HistogramData, CandlestickData, Time } from 'lightweight-charts';
 import { COLOR, SERVER_DATA_KEYS as KEY, DEFAULT_LINE_SERIES_CONFIG as DLSC, DEFAULT_PRICE_LINE_CONFIG } from './consts';
 import { TIndicatorsVisibles, TServerChartDataItem } from './types';
 
+// TODO - rewrite as a class
 export const createMyChart = (container: HTMLDivElement, chartData: TServerChartDataItem[], indicatorsVisibles: TIndicatorsVisibles) => {
   const chart = createChart(container, {
     layout: {
@@ -26,6 +27,14 @@ export const createMyChart = (container: HTMLDivElement, chartData: TServerChart
     stochRsiData,
   } = parseChartData(chartData)
 
+  const paneCounter = (() => {
+    let counter = 0;
+    return () => {
+      counter++;
+      return counter;
+    };
+  })();
+
   // Setting indicators
   if (indicatorsVisibles.bbands)
     addBBands(chart, bbandsData);
@@ -34,11 +43,11 @@ export const createMyChart = (container: HTMLDivElement, chartData: TServerChart
   if (indicatorsVisibles.ema)
     addEMA(chart, emaData);
   if (indicatorsVisibles.rsi)
-    addRSI(chart, rsiData);
+    addRSI(chart, rsiData, paneCounter);
   if (indicatorsVisibles.macd)
-    addMACD(chart, macdData);
+    addMACD(chart, macdData, paneCounter);
   if (indicatorsVisibles.stochrsi)
-    addStochRSI(chart, stochRsiData);
+    addStochRSI(chart, stochRsiData, paneCounter);
 
   // Candlesticks
   const candlestickSeries = chart.addCandlestickSeries();
@@ -64,11 +73,7 @@ const parseChartData = (data: TServerChartDataItem[]) => {
     macdData: {
       fast: SingleValueData[],
       slow: SingleValueData[],
-      hist: {
-        time: Time,
-        value: number,
-        color: string,
-      }[],
+      hist: HistogramData[],
     },
     stochRsiData: {
       slow: SingleValueData[],
@@ -172,8 +177,9 @@ const addEMA = (chart: IChartApi, data: SingleValueData[]) => {
   emaSeries.setData(data);
 }
 
-const addRSI = (chart: IChartApi, data: SingleValueData[]) => {
-  const rsiSeries = chart.addLineSeries({ ...DLSC, color: COLOR.PURPLE, pane: 1 });
+const addRSI = (chart: IChartApi, data: SingleValueData[], paneCounter: () => number) => {
+  const pane = paneCounter();
+  const rsiSeries = chart.addLineSeries({ ...DLSC, color: COLOR.PURPLE, pane: pane });
   rsiSeries.setData(data);
   rsiSeries.createPriceLine({
     ...DEFAULT_PRICE_LINE_CONFIG,
@@ -189,19 +195,21 @@ const addRSI = (chart: IChartApi, data: SingleValueData[]) => {
   });
 }
 
-const addMACD = (chart: IChartApi, data: {fast: SingleValueData[], slow: SingleValueData[], hist: SingleValueData[]}) => {
-  const macdFastSeries = chart.addLineSeries({ ...DLSC, color: COLOR.ORANGE, pane: 2 });
+const addMACD = (chart: IChartApi, data: {fast: SingleValueData[], slow: SingleValueData[], hist: SingleValueData[]}, paneCounter: () => number) => {
+  const pane = paneCounter();
+  const macdFastSeries = chart.addLineSeries({ ...DLSC, color: COLOR.ORANGE, pane: pane });
   macdFastSeries.setData(data.fast);
-  const macdSlowSeries = chart.addLineSeries({ ...DLSC, color: COLOR.BLUE, pane: 2 });
+  const macdSlowSeries = chart.addLineSeries({ ...DLSC, color: COLOR.BLUE, pane: pane });
   macdSlowSeries.setData(data.slow);
-  const macdHistogramSeries = chart.addHistogramSeries({ ...DLSC, pane: 2 });
+  const macdHistogramSeries = chart.addHistogramSeries({ ...DLSC, pane: pane });
   macdHistogramSeries.setData(data.hist);
 }
 
-const addStochRSI = (chart: IChartApi, data: {slow: SingleValueData[], fast: SingleValueData[]}) => {
-  const stochRsiSlowSeries = chart.addLineSeries({...DLSC, color: COLOR.RED, pane: 3 });
+const addStochRSI = (chart: IChartApi, data: {slow: SingleValueData[], fast: SingleValueData[]}, paneCounter: () => number) => {
+  const pane = paneCounter();
+  const stochRsiSlowSeries = chart.addLineSeries({...DLSC, color: COLOR.RED, pane: pane });
   stochRsiSlowSeries.setData(data.slow);
-  const stochRsiFastSeries = chart.addLineSeries({...DLSC, color: COLOR.GREEN, pane: 3 });
+  const stochRsiFastSeries = chart.addLineSeries({...DLSC, color: COLOR.GREEN, pane: pane });
   stochRsiFastSeries.setData(data.fast);
   stochRsiSlowSeries.createPriceLine({
     ...DEFAULT_PRICE_LINE_CONFIG,

@@ -4,8 +4,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { ThemeContextProvider } from './hooks/useThemeContext';
 
 import AuthPage from './components/AuthPage';
-import AssetsPage from './components/AssetsPage';
-import AssetDetailsPage from './components/AssetDetailsPage';
+import Home from './components/Home';
 
 
 function App() {
@@ -15,8 +14,7 @@ function App() {
         <ThemeContextProvider>
           <Routes>
             <Route path='/auth' element={<AuthPage />} />
-            <Route path='/assets' element={<AssetsPage />} />
-            <Route path='/assets/:assetName/:timeframe' element={<AssetDetailsPage />} />
+            <Route path='/home' element={<Home />} />
             <Route path='*' element={<AuthPage />} />
           </Routes>
         </ThemeContextProvider>

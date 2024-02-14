@@ -11,7 +11,7 @@ function AuthPage() {
     }
     if (data['my-message'] === 'success') {
       console.log("App entered successfully");
-      navigate("/assets");
+      navigate("/home");
     }
   }
 

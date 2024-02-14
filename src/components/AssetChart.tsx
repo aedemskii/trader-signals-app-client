@@ -25,7 +25,8 @@ const AssetChart = () => {
       const { chart, candlestickSeries } = createMyChart(chartContainerRef.current, chartData, indicatorsVisibles);
 
       chart.subscribeCrosshairMove((param) => {
-        setCandleData({...param.seriesData.get(candlestickSeries)} as TCandleData)
+        const candleData = param.seriesData.get(candlestickSeries);
+        setCandleData(candleData ? candleData as TCandleData : null);
       })
 
       const handleResize = () => {
