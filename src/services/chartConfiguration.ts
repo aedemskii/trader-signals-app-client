@@ -14,11 +14,11 @@ export const createMyChart = (container: HTMLDivElement, chartData: TServerChart
     },
     grid: {
       vertLines: {
-        color: darkTheme ? "rgba(255, 255, 255, 0.3)" : "rgba(0, 0, 0, 0.2)",
+        color: darkTheme ? 'rgba(255, 255, 255, 0.3)' : 'rgba(0, 0, 0, 0.2)',
         style: darkTheme ? 1 : 0
       },
       horzLines: {
-        color: darkTheme ? "rgba(255, 255, 255, 0.3)" : "rgba(0, 0, 0, 0.2)",
+        color: darkTheme ? 'rgba(255, 255, 255, 0.3)' : 'rgba(0, 0, 0, 0.2)',
         style: darkTheme ? 1 : 0
       },
     },
