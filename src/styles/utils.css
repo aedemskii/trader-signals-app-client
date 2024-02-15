@@ -2,8 +2,16 @@
   display: flex;
 }
 
+.flex-ai-c {
+  align-items: center;
+}
+
 .flex-jc-sb {
   justify-content: space-between;
+}
+
+.flex-jc-sa {
+  justify-content: space-around;
 }
 
 .margin-lr-10 {

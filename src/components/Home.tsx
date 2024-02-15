@@ -2,17 +2,20 @@ import AssetChart from './AssetChart';
 import { ControlPanel } from './ControlPanel';
 import { ChartConfigPanel } from './ChartConfigPanel';
 import { ChartContextProvider } from '../hooks/useChartContext';
+import { useThemeContext } from '../hooks/useThemeContext';
+import '../styles/Home.css';
 
 function Home() {
+  const { darkTheme } = useThemeContext();
+
   return (
-    <>
+    <div className={`home ${darkTheme ? 'dark' : 'light'}`}>
       <ChartContextProvider>
         <ControlPanel />
-        <h1>Asset Detail Page</h1>
         <ChartConfigPanel />
         <AssetChart />
       </ChartContextProvider>
-    </>
+    </div>
   );
 }
 

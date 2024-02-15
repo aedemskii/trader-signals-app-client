@@ -1,0 +1,16 @@
+div.home {
+  position: absolute;
+  min-height: 700px;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+div.home.light {
+  background-color: white;
+}
+
+div.home.dark {
+  background-color: rgb(37, 37, 38);
+}

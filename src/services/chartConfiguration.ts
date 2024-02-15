@@ -3,19 +3,32 @@ import { COLOR, SERVER_DATA_KEYS as KEY, DEFAULT_LINE_SERIES_CONFIG as DLSC, DEF
 import { TIndicatorsVisibles, TServerChartDataItem } from './types';
 
 // TODO - rewrite as a class
-export const createMyChart = (container: HTMLDivElement, chartData: TServerChartDataItem[], indicatorsVisibles: TIndicatorsVisibles) => {
+export const createMyChart = (container: HTMLDivElement, chartData: TServerChartDataItem[], indicatorsVisibles: TIndicatorsVisibles, darkTheme: boolean): { chart: IChartApi, candlestickSeries: any } => {
   const chart = createChart(container, {
     layout: {
-      background: { type: ColorType.Solid, color: COLOR.WHITE },
-      textColor: COLOR.BLACK,
+      background: {
+        type: ColorType.Solid,
+        color: darkTheme ? COLOR.BLACK : COLOR.WHITE,
+      },
+      textColor: darkTheme ? COLOR.WHITE : COLOR.BLACK,
+    },
+    grid: {
+      vertLines: {
+        color: darkTheme ? "rgba(255, 255, 255, 0.3)" : "rgba(0, 0, 0, 0.2)",
+        style: darkTheme ? 1 : 0
+      },
+      horzLines: {
+        color: darkTheme ? "rgba(255, 255, 255, 0.3)" : "rgba(0, 0, 0, 0.2)",
+        style: darkTheme ? 1 : 0
+      },
     },
     crosshair: {
       mode: 0,
     },
-    width: container.clientWidth,
-    height: 500
+    height: 500,
   });
   chart.timeScale().fitContent();
+
 
   const {
     candlestickData,
@@ -59,6 +72,7 @@ export const createMyChart = (container: HTMLDivElement, chartData: TServerChart
   };
 };
 
+// TODO - handle repeating code
 const parseChartData = (data: TServerChartDataItem[]) => {
   const result: {
     candlestickData: CandlestickData[],

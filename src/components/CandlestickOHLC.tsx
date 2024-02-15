@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { COLOR } from '../services/consts';
-import '../styles/utils.css';
 import { TCandleData, TColor } from '../services/types';
+import '../styles/utils.css';
 
 export const CandlestickOHLC = ({ candleData } : { candleData: TCandleData | null }) => {
   const [ textColor, setTextColor ] = useState<TColor>(COLOR.BLACK);

@@ -5,22 +5,18 @@ import '../styles/ControlPanel.css';
 
 export const ControlPanel = () => {
   const navigate = useNavigate();
-  const themeContext = useThemeContext();
-  if (themeContext === null) {
-    throw new Error('Theme context is null');
-  }
-  const { darkTheme, toggleTheme } = themeContext;
+  const { darkTheme, toggleTheme } = useThemeContext();
 
   const logOut = () => {
     navigate('/auth');
   };
 
   return (
-    <div className='control-panel'>
+    <div className={`control-panel ${darkTheme ? 'dark' : 'light'}`}>
       <div className='title'>Trading acolyte</div>
       <div className='controls'>
         <div
-          className={`control theme ${darkTheme ? 'dark' : 'light'}`}
+          className='control theme'
           onClick={toggleTheme}
         />
         <div className='control log-out' onClick={logOut} />

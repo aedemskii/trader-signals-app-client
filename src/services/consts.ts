@@ -1,9 +1,10 @@
-import { TChartConfig } from "./types";
+import { TChartConfig } from './types';
 
 export const COLOR = {
   BLACK: 'black',
   BLUE: 'blue',
   CYAN: 'cyan',
+  DIMGRAY: 'dimgray',
   GRAY: 'gray',
   GREEN: 'green',
   MAGENTA: 'magenta',

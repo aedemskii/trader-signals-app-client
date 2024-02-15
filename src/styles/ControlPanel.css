@@ -6,6 +6,14 @@ div.control-panel {
   justify-content: space-between;
   border-bottom: 1px;
   background-color: blanchedalmond;
+  box-shadow: 0 0 5px rgb(161, 113, 0);
+  z-index: 10;
+}
+
+div.control-panel.dark {
+  background-color: rgb(30, 30, 30);
+  color: white;
+  box-shadow: 0 0 5px black;
 }
 
 div.control-panel > div {
@@ -21,21 +29,60 @@ div.controls > div.control {
   height: 30px;
   width: 30px;
   margin-left: 15px;
+  border-radius: 5px;
   cursor: pointer;
+  border: 1px solid rgba(0, 0, 0, 0);
 }
 
 div.controls > div.control:first-of-type {
   margin-left: 0;
 }
 
-div.control-panel > div.controls > div.control.theme.dark {
-  background-color: darkslategray
+div.control-panel > div.controls > div.control.theme {
+  background-size: 26px 26px;
+  background-position: center center;
+  background-repeat: no-repeat;
 }
 
-div.control-panel > div.controls > div.control.theme.light {
-  background-color: cadetblue;
+/* TODO - find proper svg's */
+/* TODO - handle const values */
+div.control-panel.dark > div.controls > div.control.theme {
+  background-image: url('../icons/mode-dark.svg');
+  background-color: rgb(121, 121, 121);
+}
+
+div.control-panel.dark > div.controls > div.control.theme:hover {
+  border-color: rgb(198, 198, 198);
+}
+
+div.control-panel.light > div.controls > div.control.theme {
+  background-image: url('../icons/mode-light.svg');
+  background-color: rgb(255, 189, 66);
+}
+
+div.control-panel.light > div.controls > div.control.theme:hover {
+  border-color: rgb(255, 102, 0);
 }
 
 div.control-panel > div.controls > div.control.log-out {
-  background-color: chocolate;
+  background-size: 26px 26px;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-image: url('../icons/log-out.svg');
+}
+
+div.control-panel.light > div.controls > div.control.log-out {
+  background-color: rgb(255, 189, 66);
+}
+
+div.control-panel.light > div.controls > div.control.log-out:hover {
+  border-color: rgb(255, 102, 0);
+}
+
+div.control-panel.dark > div.controls > div.control.log-out {
+  background-color: rgb(121, 121, 121);
+}
+
+div.control-panel.dark > div.controls > div.control.log-out:hover {
+  border-color: rgb(198, 198, 198);
 }

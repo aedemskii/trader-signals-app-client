@@ -1,0 +1,12 @@
+div.panel-container {
+  position: relative;
+  padding: 20px 0;
+}
+
+div.panel-container > div.chart-config-panel {
+  width: 90%;
+}
+
+div.panel-container.dark > div.chart-config-panel {
+  color: white;
+}
