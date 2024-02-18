@@ -1,8 +1,9 @@
 import React from 'react';
 import { useChartContext } from '../hooks/useChartContext';
+import { useThemeContext } from '../hooks/useThemeContext';
+import { Select } from './Select';
 import { CHART_CONFIG_REDUCER_ACTIONS as ACTIONS, ASSETS, TIMEFRAMES } from '../services/consts';
 import { TAsset, TTimeframe, TIndicatorName } from '../services/types';
-import { useThemeContext } from '../hooks/useThemeContext';
 import '../styles/ChartConfigPanel.css'
 import '../styles/utils.css'
 
@@ -18,13 +19,13 @@ export const ChartConfigPanel = () => {
     });
   };
 
-  const handleAssetChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const assetName = e.currentTarget.value as TAsset;
+  const handleAssetChange = (asset: string) => {
+    const assetName = asset as TAsset;
     chartConfigDispatch({ type: ACTIONS.SET_ASSET_NAME, payload: {assetName: assetName}})
   }
 
-  const handleTimeframeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const timeframe = e.currentTarget.value as TTimeframe;
+  const handleTimeframeChange = (asset: string) => {
+    const timeframe = asset as TTimeframe;
     chartConfigDispatch({ type: ACTIONS.SET_TIMEFRAME, payload: {timeframe: timeframe}})
   }
 
@@ -34,37 +35,11 @@ export const ChartConfigPanel = () => {
         <div className='controls flex flex-jc-sb'>
           <div className='flex'>
             <div>Asset:</div>
-            <select
-              defaultValue={assetName}
-              onChange={handleAssetChange}
-            >
-              {
-                Object.keys(ASSETS).map((asset) => (
-                  <option
-                    key={asset}
-                    value={ASSETS[asset as keyof typeof ASSETS]}>
-                      {ASSETS[asset as keyof typeof ASSETS]}
-                  </option>
-                ))
-              }
-            </select>
+            <Select onChange={handleAssetChange} values = {ASSETS} selectedValue={assetName} />
           </div>
           <div className='flex'>
             <div>Timeframe:</div>
-            <select
-              defaultValue={timeframe}
-              onChange={handleTimeframeChange}
-            >
-              {
-                Object.keys(TIMEFRAMES).map((timeframe_option) => (
-                  <option
-                    key={timeframe_option}
-                    value={TIMEFRAMES[timeframe_option as keyof typeof TIMEFRAMES]}>
-                      {TIMEFRAMES[timeframe_option as keyof typeof TIMEFRAMES]}
-                  </option>
-                ))
-              }
-            </select>
+            <Select onChange={handleTimeframeChange} values = {TIMEFRAMES} selectedValue={timeframe} />
           </div>
           <div className='flex'>
             <div>Indicators:</div>

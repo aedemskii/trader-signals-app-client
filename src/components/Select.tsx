@@ -1,0 +1,77 @@
+import React, { useEffect, useState, useRef } from 'react';
+import { useThemeContext } from '../hooks/useThemeContext';
+import '../styles/Select.css';
+
+export const Select = (
+    {
+      onChange,
+      values,
+      selectedValue
+    } : {
+      onChange: (value: string) => void,
+      values: { [key: string]: string };
+      selectedValue: string
+    }
+  ) => {
+
+  const { darkTheme } = useThemeContext();
+  const selectRef = useRef<HTMLDivElement | null>(null);
+  const [ selectionOn, setSelectionOn ] = useState(false);
+
+  useEffect(() => {
+    const cancelSelect = (e: MouseEvent) => {
+      e.stopPropagation();
+      if (selectRef.current && !selectRef.current.contains(e.target as Node))
+        setSelectionOn(false);
+    };
+    document.addEventListener('click', cancelSelect)
+
+    return(() => {
+      window.removeEventListener('click', cancelSelect);
+    })
+  }, []);
+
+  const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    setSelectionOn(!selectionOn);
+  };
+
+  const handleChange = (e: React.MouseEvent<HTMLDivElement>) => {
+    const value = e.currentTarget.textContent;
+    if (value === null) {
+      throw new Error('Error in Select component');
+    }
+    onChange(value);
+    setSelectionOn(false);
+  };
+
+  return(
+    <div 
+      className={`select-container ${darkTheme ? 'dark' : 'light'} ${selectionOn ? 'selecting' : ''}`}
+      ref={selectRef}
+      >
+      <div 
+        className='select'
+        onClick={handleClick}
+        >
+        <div className='value'>{selectedValue}</div>
+      </div>
+      {selectionOn &&
+        <div className='dropdown-menu'>
+          {Object.keys(values).map(key => {
+            let className = 'dropdown-menu-item';
+            if (values[key] === selectedValue)
+              className += ' ' + 'selected'
+            return(
+              <div 
+                className={className} 
+                key={key}
+                onClick={handleChange}
+                >
+                  {values[key]}
+              </div>
+            );
+        })}
+      </div>}
+    </div>
+  );
+}
