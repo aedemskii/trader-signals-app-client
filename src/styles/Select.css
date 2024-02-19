@@ -1,11 +1,11 @@
-.select-container {
+.select-control {
   position: relative;
   display: flex;
   justify-content: space-between;
   user-select: none;
 }
 
-.select-container .select {
+.select-control .select {
   position: relative;
   display: flex;
   padding: 5px;/* const id 2 */
@@ -17,27 +17,27 @@
   cursor: pointer;
 }
 
-.select-container.dark .select {
+.select-control.dark .select {
   border-color: white;
   background-color: black;
   color: white;
 }
 
-.select-container .select:hover {
+.select-control .select:hover {
   background-color: #f1f1f1;
 }
 
-.select-container.dark .select:hover {
+.select-control.dark .select:hover {
   background-color: #474747ee;
 }
 
-.select-container .select .dummy {
+.select-control .select .dummy {
   position: relative;
   color: rgba(0, 0, 0, 0);
   background-color: rgba(0, 0, 0, 0);
 }
 
-.select-container .select .value {
+.select-control .select .value {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -48,7 +48,7 @@
   box-sizing: border-box;
 }
 
-.select-container .select::after {
+.select-control .select::after {
   position: absolute;
   width: 7px; /* const id 4 */
   height: 7px; /* const id 4 */
@@ -62,21 +62,25 @@
   transition: all 0.2s ease-in-out;
 }
 
-.select-container.dark .select::after {
+.select-control.dark .select::after {
   border-color: white;
 }
 
-.select-container.select-on .select::after {
+.select-control.select-on .select::after {
   transform: translateX(-100%) translateY(-25%) rotate(315deg);;
 }
 
-.select-container .select-menu {
+.select-control .select-menu-holder {
   position: absolute;
+  top: 100%;
+  width: 100%;
+  padding-top: 5px;
+  z-index: 100;
+}
+
+.select-control .select-menu-holder .select-menu {
   display: flex;
   flex-direction: column;
-  top: 110%;
-  width: 100%;
-  z-index: 100;
   background-color: white;
   border: 1px solid black;
   border-radius: 5px; /* const id 3 */
@@ -84,13 +88,13 @@
   align-items: flex-start;
 }
 
-.select-container.dark .select-menu {
+.select-control.dark .select-menu-holder .select-menu {
   border-color: white;
   background-color: black;
   color: white;
 }
 
-.select-container .select-menu .select-menu-item {
+.select-control .select-menu-holder .select-menu .select-menu-item {
   position: relative;
   padding: 5px; /* const id 2 */
   width: 100%;
@@ -99,14 +103,14 @@
   cursor: pointer;
 }
 
-.select-container .select-menu .select-menu-item.selected {
+.select-control .select-menu-holder .select-menu .select-menu-item.selected {
   font-weight: bold;
 }
 
-.select-container .select-menu .select-menu-item:hover {
+.select-control .select-menu-holder .select-menu .select-menu-item:hover {
   background-color: #f1f1f1;
 }
 
-.select-container.dark .select-menu .select-menu-item:hover {
+.select-control.dark .select-menu-holder .select-menu .select-menu-item:hover {
   background-color: #474747ee;
 }

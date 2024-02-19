@@ -47,7 +47,7 @@ export const Select = (
 
   return (
     <div 
-      className={`select-container ${darkTheme ? 'dark' : 'light'} ${selectionOn ? 'select-on' : ''}`}
+      className={`select-control ${darkTheme ? 'dark' : 'light'} ${selectionOn ? 'select-on' : ''}`}
       ref={selectRef}
       >
       <div
@@ -58,22 +58,25 @@ export const Select = (
         <div className='value'>{selectedValue}</div>
       </div>
       {selectionOn &&
-        <div className='select-menu'>
-          {Object.keys(values).map(key => {
-            let className = 'select-menu-item';
-            if (values[key] === selectedValue)
-              className += ' ' + 'selected'
-            return(
-              <div 
-                className={className} 
-                key={key}
-                onClick={handleChange}
-                >
-                  {values[key]}
-              </div>
-            );
-        })}
-      </div>}
+        <div className='select-menu-holder'>
+          <div className='select-menu'>
+            {Object.keys(values).map(key => {
+              let className = 'select-menu-item';
+              if (values[key] === selectedValue)
+                className += ' ' + 'selected'
+              return(
+                <div 
+                  className={className} 
+                  key={key}
+                  onClick={handleChange}
+                  >
+                    {values[key]}
+                </div>
+              );
+          })}
+          </div>
+        </div>
+      }
     </div>
   );
 };
