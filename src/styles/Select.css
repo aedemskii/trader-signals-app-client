@@ -2,7 +2,7 @@
   position: relative;
   display: flex;
   justify-content: space-between;
-  cursor: pointer;
+  user-select: none;
 }
 
 .select-container .select {
@@ -14,7 +14,9 @@
   background-color: white;
   color: black;
   border-radius: 5px;/* const id 3 */
+  cursor: pointer;
 }
+
 .select-container.dark .select {
   border-color: white;
   background-color: black;
@@ -64,11 +66,11 @@
   border-color: white;
 }
 
-.select-container.selecting .select::after {
+.select-container.select-on .select::after {
   transform: translateX(-100%) translateY(-25%) rotate(315deg);;
 }
 
-.select-container .dropdown-menu {
+.select-container .select-menu {
   position: absolute;
   display: flex;
   flex-direction: column;
@@ -82,28 +84,29 @@
   align-items: flex-start;
 }
 
-.select-container.dark .dropdown-menu {
+.select-container.dark .select-menu {
   border-color: white;
   background-color: black;
   color: white;
 }
 
-.select-container .dropdown-menu .dropdown-menu-item {
+.select-container .select-menu .select-menu-item {
   position: relative;
   padding: 5px; /* const id 2 */
   width: 100%;
   box-sizing: border-box;
   border-radius: 5px; /* const id 3 */
+  cursor: pointer;
 }
 
-.select-container .dropdown-menu .dropdown-menu-item.selected {
+.select-container .select-menu .select-menu-item.selected {
   font-weight: bold;
 }
 
-.select-container .dropdown-menu .dropdown-menu-item:hover {
+.select-container .select-menu .select-menu-item:hover {
   background-color: #f1f1f1;
 }
 
-.select-container.dark .dropdown-menu .dropdown-menu-item:hover {
+.select-container.dark .select-menu .select-menu-item:hover {
   background-color: #474747ee;
 }

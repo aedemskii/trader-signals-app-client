@@ -45,12 +45,12 @@ export const Select = (
     setSelectionOn(false);
   };
 
-  return(
+  return (
     <div 
-      className={`select-container ${darkTheme ? 'dark' : 'light'} ${selectionOn ? 'selecting' : ''}`}
+      className={`select-container ${darkTheme ? 'dark' : 'light'} ${selectionOn ? 'select-on' : ''}`}
       ref={selectRef}
       >
-      <div 
+      <div
         className='select'
         onClick={handleClick}
         >
@@ -58,9 +58,9 @@ export const Select = (
         <div className='value'>{selectedValue}</div>
       </div>
       {selectionOn &&
-        <div className='dropdown-menu'>
+        <div className='select-menu'>
           {Object.keys(values).map(key => {
-            let className = 'dropdown-menu-item';
+            let className = 'select-menu-item';
             if (values[key] === selectedValue)
               className += ' ' + 'selected'
             return(
