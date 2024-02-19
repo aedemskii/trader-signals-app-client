@@ -58,7 +58,6 @@ export const TIMEFRAMES = {
   _8H: '8h',
   _1D: '1D',
   _1W: '1W',
-  _2W: '2W',
   _1M: '1M',
 } as const;
 
