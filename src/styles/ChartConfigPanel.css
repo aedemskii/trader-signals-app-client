@@ -1,6 +1,7 @@
 div.panel-container {
   position: relative;
   padding: 20px 0;
+  user-select: none;
 }
 
 div.panel-container > div.chart-config-panel {

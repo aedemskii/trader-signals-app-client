@@ -8,6 +8,7 @@ div.control-panel {
   background-color: blanchedalmond;
   box-shadow: 0 0 5px rgb(161, 113, 0);
   z-index: 10;
+  user-select: none;
 }
 
 div.control-panel.dark {
