@@ -20,31 +20,38 @@ export const DropdownMenu = ({title, children} : {title: string, children: React
     })
   }, []);
 
-  const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
-    setDropdownOn(!dropdownOn);
+  const handleMouseOver = () => {
+    setDropdownOn(true);
+  };
+
+  const handleMouseLeave = () => {
+    setDropdownOn(false);
   };
 
   return (
     <div 
-      className={`dropdown-menu-container ${darkTheme ? 'dark' : 'light'} ${dropdownOn ? 'dropdown-on' : ''}`}
+      className={`dropdown-menu-control ${darkTheme ? 'dark' : 'light'} ${dropdownOn ? 'dropdown-on' : ''}`}
       ref={dropdownRef}
+      onMouseOver={handleMouseOver}
+      onMouseLeave={handleMouseLeave}
       >
-      <div 
+      <div
         className='dropdown-menu-title'
-        onClick={handleClick}
         >
         {title}
       </div>
       {dropdownOn && children &&
-        <div className='dropdown-menu'>
-          {children.map((child, idx) => (
-              <div 
-                className='dropdown-menu-item'
-                key={idx}
-                >
-                {child}
-              </div>
-            ))}
+        <div className='dropdown-menu-container'>
+          <div className='dropdown-menu'>
+            {children.map((child, idx) => (
+                <div
+                  className='dropdown-menu-item'
+                  key={idx}
+                  >
+                  {child}
+                </div>
+              ))}
+          </div>
         </div>
       }
     </div>
