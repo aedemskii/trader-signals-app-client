@@ -41,7 +41,7 @@ export const DropdownMenu = ({title, children} : {title: string, children: React
         {title}
       </div>
       {dropdownOn && children &&
-        <div className='dropdown-menu-container'>
+        <div className='dropdown-menu-holder'>
           <div className='dropdown-menu'>
             {children.map((child, idx) => (
                 <div

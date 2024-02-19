@@ -1,0 +1,55 @@
+.indicator-config {
+  display: flex;
+  justify-content: space-between;
+  padding: 5px;
+}
+
+.indicator-config .indicator-config-control {
+  width: 20px;
+  height: 20px;
+  background-size: 20px 20px;
+  background-repeat: no-repeat;
+  cursor: pointer;
+}
+
+.indicator-config .indicator-config-control:hover {
+  opacity: 0.5;
+}
+
+.indicator-config .indicator-config-control.visible-control.visible {
+  background-image: url('../icons/visibility-show-light.svg');
+}
+
+.indicator-config .indicator-config-control.visible-control.hidden {
+  background-image: url('../icons/visibility-hide-light.svg');
+}
+
+.indicator-config.dark .indicator-config-control.visible-control.visible {
+  background-image: url('../icons/visibility-show-dark.svg');
+}
+
+.indicator-config.dark .indicator-config-control.visible-control.hidden {
+  background-image: url('../icons/visibility-hide-dark.svg');
+}
+
+.indicator-config .indicator-config-control.settings-control {
+  background-image: url('../icons/settings-mini-light.svg');
+}
+
+.indicator-config.dark .indicator-config-control.settings-control {
+  background-image: url('../icons/settings-mini-dark.svg');
+}
+
+.indicator-config .indicator-config-control.delete-control {
+  background-image: url('../icons/delete-light.svg');
+}
+
+.indicator-config.dark .indicator-config-control.delete-control {
+  background-image: url('../icons/delete-dark.svg');
+}
+
+
+
+.indicator-config .indicator-title.crossed {
+  text-decoration: line-through;
+}

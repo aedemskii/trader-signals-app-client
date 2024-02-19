@@ -53,7 +53,7 @@
   transition: all 0.2s ease-in-out;
 }
 
-.dropdown-menu-control .dropdown-menu-container {
+.dropdown-menu-control .dropdown-menu-holder {
   position: absolute;
   top: 100%;
   left: 0;

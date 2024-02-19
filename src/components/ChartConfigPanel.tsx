@@ -3,6 +3,7 @@ import { useChartContext } from '../hooks/useChartContext';
 import { useThemeContext } from '../hooks/useThemeContext';
 import { Select } from './Select';
 import { DropdownMenu } from './DropdownMenu';
+import { IndicatorConfig } from './IndicatorConfig';
 import { CHART_CONFIG_REDUCER_ACTIONS as ACTIONS, ASSETS, TIMEFRAMES, INDICATORS } from '../services/consts';
 import { TAsset, TTimeframe, TIndicatorName } from '../services/types';
 import '../styles/ChartConfigPanel.css'
@@ -34,11 +35,11 @@ export const ChartConfigPanel = () => {
     <div className={`panel-container flex flex-jc-sa ${darkTheme ? 'dark' : 'light'}`}>
       <div className='chart-config-panel'>
         <div className='controls flex flex-jc-sb'>
-          <div className='flex flex-ai-c'>
+          <div className='flex flex-ai-c flex-gap-5'>
             <div>Asset:</div>
             <Select onChange={handleAssetChange} values = {ASSETS} selectedValue={assetName} />
           </div>
-          <div className='flex flex-ai-c'>
+          <div className='flex flex-ai-c flex-gap-5'>
             <div>Timeframe:</div>
             <Select onChange={handleTimeframeChange} values = {TIMEFRAMES} selectedValue={timeframe} />
           </div>
@@ -47,17 +48,12 @@ export const ChartConfigPanel = () => {
             children={
               Object.values(INDICATORS).map(value => {
                 return (
-                  <div
-                    className='flex'
+                  <IndicatorConfig
                     key={value}
-                    >
-                    <input
-                      type='checkbox'
-                      checked={indicatorsVisibles[value]}
-                      onChange={(e) => setIndicatorVisible(value)}
-                      />
-                    <div>{value.toUpperCase()}</div>
-                  </div>
+                    indicatorName={value.toUpperCase()}
+                    visible={indicatorsVisibles[value]}
+                    toggleVisible={() => setIndicatorVisible(value)}
+                  />
                 );
               })} />
           <div />
