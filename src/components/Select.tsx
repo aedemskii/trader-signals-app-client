@@ -17,6 +17,7 @@ export const Select = (
   const { darkTheme } = useThemeContext();
   const selectRef = useRef<HTMLDivElement | null>(null);
   const [ selectionOn, setSelectionOn ] = useState(false);
+  const longestValue = getLongestValue(values);
 
   useEffect(() => {
     const cancelSelect = (e: MouseEvent) => {
@@ -53,6 +54,7 @@ export const Select = (
         className='select'
         onClick={handleClick}
         >
+        <div className='dummy'>{longestValue}</div>
         <div className='value'>{selectedValue}</div>
       </div>
       {selectionOn &&
@@ -74,4 +76,13 @@ export const Select = (
       </div>}
     </div>
   );
-}
+};
+
+const getLongestValue = (values: {[key: string]: string}): string => {
+  let res = '';
+  Object.keys(values).forEach(key => {
+    if (values[key].length > res.length)
+      res = values[key];
+  });
+  return res;
+};
