@@ -1,4 +1,4 @@
-div.my-chart {
+.my-chart {
     width: 90%;
     position: relative;
     border: 1px solid black;
@@ -6,12 +6,12 @@ div.my-chart {
     margin: 0 5%;
 }
 
-div.my-chart > div.tv-chart {
+.my-chart > .tv-chart {
     position: relative;
     width: 100%;
 }
 
-div.my-chart > div.title {
+.my-chart > .title {
     position: absolute;
     top: 0;
     left: 0;
@@ -20,11 +20,11 @@ div.my-chart > div.title {
     text-align: left;
 }
 
-div.my-chart.dark > div.title {
+.my-chart.dark > .title {
     color: white;
 }
 
-div.ohlc-holder > div.ohlc-value {
+.ohlc-holder > .ohlc-value {
     margin-right: 3px;
     margin-left: 3px;
 }

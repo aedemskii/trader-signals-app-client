@@ -1,13 +1,13 @@
-div.panel-container {
+.panel-container {
   position: relative;
   padding: 20px 0;
   user-select: none;
 }
 
-div.panel-container > div.chart-config-panel {
+.panel-container > .chart-config-panel {
   width: 90%;
 }
 
-div.panel-container.dark > div.chart-config-panel {
+.panel-container.dark > .chart-config-panel {
   color: white;
 }

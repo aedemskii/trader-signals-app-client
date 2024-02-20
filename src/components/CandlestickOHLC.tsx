@@ -18,7 +18,7 @@ export const CandlestickOHLC = ({ candleData } : { candleData: TCandleData | nul
         candleData.high.toString().length,
         candleData.low.toString().length
         );
-      setWidth(maxLen * 9); // TODO - remove magic number
+      setWidth(maxLen * 9); // TODO: - remove magic number
     } else if (candle) {
       setCandle(prev => prev);
     } else {
@@ -26,7 +26,6 @@ export const CandlestickOHLC = ({ candleData } : { candleData: TCandleData | nul
     }
   }, [candleData]);
 
-  // TODO - handle repeating code
   return (
     <>
       {candle &&

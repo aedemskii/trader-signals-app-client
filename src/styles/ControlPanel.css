@@ -1,4 +1,4 @@
-div.control-panel {
+.control-panel {
   position: sticky;
   top: 0;
   padding: 10px;
@@ -11,22 +11,22 @@ div.control-panel {
   user-select: none;
 }
 
-div.control-panel.dark {
+.control-panel.dark {
   background-color: rgb(30, 30, 30);
   color: white;
   box-shadow: 0 0 5px black;
 }
 
-div.control-panel > div {
+.control-panel > div {
   position: relative;
   display: flex;
 }
 
-div.control-panel > div.title {
+.control-panel > .title {
   font-size: 24px;
 }
 
-div.controls > div.control {
+.controls > .control {
   height: 30px;
   width: 30px;
   margin-left: 15px;
@@ -35,55 +35,55 @@ div.controls > div.control {
   border: 1px solid rgba(0, 0, 0, 0);
 }
 
-div.controls > div.control:first-of-type {
+.controls > .control:first-of-type {
   margin-left: 0;
 }
 
-div.control-panel > div.controls > div.control.theme {
+.control-panel > .controls > .control.theme {
   background-size: 26px 26px;
   background-position: center center;
   background-repeat: no-repeat;
 }
 
-/* TODO - find proper svg's */
-/* TODO - handle const values */
-div.control-panel.dark > div.controls > div.control.theme {
+/* TODO: - find proper svg's */
+/* TODO: - handle const values */
+.control-panel.dark > .controls > .control.theme {
   background-image: url('../icons/mode-dark.svg');
   background-color: rgb(121, 121, 121);
 }
 
-div.control-panel.dark > div.controls > div.control.theme:hover {
+.control-panel.dark > .controls > .control.theme:hover {
   border-color: rgb(198, 198, 198);
 }
 
-div.control-panel.light > div.controls > div.control.theme {
+.control-panel.light > .controls > .control.theme {
   background-image: url('../icons/mode-light.svg');
   background-color: rgb(255, 189, 66);
 }
 
-div.control-panel.light > div.controls > div.control.theme:hover {
+.control-panel.light > .controls > .control.theme:hover {
   border-color: rgb(255, 102, 0);
 }
 
-div.control-panel > div.controls > div.control.log-out {
+.control-panel > .controls > .control.log-out {
   background-size: 26px 26px;
   background-position: center center;
   background-repeat: no-repeat;
   background-image: url('../icons/log-out.svg');
 }
 
-div.control-panel.light > div.controls > div.control.log-out {
+.control-panel.light > .controls > .control.log-out {
   background-color: rgb(255, 189, 66);
 }
 
-div.control-panel.light > div.controls > div.control.log-out:hover {
+.control-panel.light > .controls > .control.log-out:hover {
   border-color: rgb(255, 102, 0);
 }
 
-div.control-panel.dark > div.controls > div.control.log-out {
+.control-panel.dark > .controls > .control.log-out {
   background-color: rgb(121, 121, 121);
 }
 
-div.control-panel.dark > div.controls > div.control.log-out:hover {
+.control-panel.dark > .controls > .control.log-out:hover {
   border-color: rgb(198, 198, 198);
 }

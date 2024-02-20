@@ -22,7 +22,7 @@ const AssetChart = () => {
     })();
   }, [assetName, timeframe]);
 
-  // TODO - make chart visible within the component and change layout options without rerendering the whole thing
+  // TODO: - make chart visible within the component and change layout options without rerendering the whole thing
   useEffect(() => {
     if (chartContainerRef?.current && indicatorsVisibles) {
       const { chart, candlestickSeries } = createMyChart(chartContainerRef.current, chartData, indicatorsVisibles, darkTheme);

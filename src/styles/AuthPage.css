@@ -1,4 +1,4 @@
-div.auth-page {
+.auth-page {
   position: absolute;
   min-height: 500px;
   top: 0;
@@ -7,31 +7,31 @@ div.auth-page {
   right: 0;
 }
 
-div.auth-page.light {
+.auth-page.light {
   background-color: white;
 }
 
-div.auth-page.dark {
+.auth-page.dark {
   background-color: rgb(37, 37, 38);
 }
 
-div.auth-window {
+.auth-window {
   width: 350px;
   height: 500px;
   border-radius: 10px;
 }
 
-div.auth-page.light > div.auth-window {
+.auth-page.light > .auth-window {
   background-color: blanchedalmond;
   box-shadow: 0px 0px 10px 0px grey
 }
 
-div.auth-page.dark > div.auth-window {
+.auth-page.dark > .auth-window {
   background-color: rgb(30, 30, 30);
   box-shadow: 0px 0px 10px 0px black
 }
 
-div.auth-page > div.auth-window > button {
+.auth-page > .auth-window > button {
   background-color: #f9a556;
   border: 1px solid grey;
   padding: 10px 15px;

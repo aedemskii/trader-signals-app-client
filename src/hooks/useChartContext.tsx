@@ -81,7 +81,7 @@ const chartConfigReducer = (chartConfig: TChartConfig, action: TChartConfigReduc
     }
     case ACTIONS.TINKER_INDICATOR:
     {
-      // TODO - handle tinkering
+      // TODO: - handle tinkering
       return chartConfig;
     }
     default:

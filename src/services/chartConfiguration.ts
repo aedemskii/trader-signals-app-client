@@ -2,7 +2,7 @@ import { createChart, ColorType, IChartApi, SingleValueData, HistogramData, Cand
 import { COLOR, SERVER_DATA_KEYS as KEY, DEFAULT_LINE_SERIES_CONFIG as DLSC, DEFAULT_PRICE_LINE_CONFIG } from './consts';
 import { TIndicatorsVisibles, TServerChartDataItem } from './types';
 
-// TODO - rewrite as a class
+// TODO: - rewrite as a class
 export const createMyChart = (container: HTMLDivElement, chartData: TServerChartDataItem[], indicatorsVisibles: TIndicatorsVisibles, darkTheme: boolean): { chart: IChartApi, candlestickSeries: any } => {
   const chart = createChart(container, {
     layout: {
@@ -72,7 +72,7 @@ export const createMyChart = (container: HTMLDivElement, chartData: TServerChart
   };
 };
 
-// TODO - handle repeating code
+// TODO: - handle repeating code
 const parseChartData = (data: TServerChartDataItem[]) => {
   const result: {
     candlestickData: CandlestickData[],
